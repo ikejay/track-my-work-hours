@@ -3,7 +3,7 @@ import { Pool, PoolConfig } from "pg"
 import knexC from "knex"
 import { snakeToCamel } from "../helpers/converters"
 
-export let knex: Knex<any, unknown[]> | null = null
+export let knex: Knex<any, unknown[]> 
 
 export let pool: Pool | null = null
 
@@ -18,13 +18,13 @@ const connect = async (config: Knex.Config) => {
   })
 }
 
-const DEFAULT_SCHEMA_NAME = "tracking_hours_db"
+const DEFAULT_SCHEMA_NAME = "tracking_hours_schema"
 const DEFAULT_SESSION_SCHEMA_NAME = "user_sessions"
 
 export const connectToPostgres = async (
   _schemaName: string = DEFAULT_SCHEMA_NAME,
   _sessionSchemaName: string = DEFAULT_SESSION_SCHEMA_NAME,
-): Promise<any> => {
+): Promise<Pool> => {
   const { PGHOST, PGPORT, PGUSER, PGPASSWORD, PGDATABASE } = process.env
   const dbPort = PGPORT ? Number(PGPORT) : 5432
 
@@ -73,5 +73,3 @@ export const connectToPostgres = async (
 
   return pool
 }
-
-
